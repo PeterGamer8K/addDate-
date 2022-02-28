@@ -12,22 +12,18 @@ function dateAdd(typeOfIncrement, addFactor, referenceDate) {
         ),
     };
 
-
-
     switch (sanitizedTypeOfIncrement) {
         case "year":
             dates.year = addYear(addFactor, dates.year);
             break;
     }
-
-    dateInArray.concat(dates.year, dates.month, dates.day);
+    dateInArray.push(dates.year, dates.month, dates.day);
 
     newDate = dateInArray.join("-");
-
     return newDate;
 }
 
-console.log(dateAdd("year", 2, "2022-02-27"));
+console.log(dateAdd("year", -2000, "2022-02-27"));
 
 // date format = yyyy-mm-dd
 
