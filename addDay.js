@@ -1,29 +1,46 @@
 function dateAdd(typeOfIncrement, addFactor, referenceDate) {
-    let newDate;
-    const dateInArray = [];
-    const sanitizedTypeOfIncrement = typeOfIncrement.toLowerCase();
+    const content = {};
+    content.dateInArray = [];
 
+    main();
 
-    const dates = {
-        day: parseInt(referenceDate[8] + referenceDate[9]),
-        month: parseInt(referenceDate[5] + referenceDate[6]),
-        year: parseInt(
-            referenceDate[0] + referenceDate[1] + referenceDate[2] + referenceDate[3]
-        ),
-    };
-
-    switch (sanitizedTypeOfIncrement) {
-        case "year":
-            dates.year = addYear(addFactor, dates.year);
-            break;
+    function main() {
+        sanitizeUserInput();
+        separateDateInVariables();
+        addTheDate();
     }
-    dateInArray.push(dates.year, dates.month, dates.day);
 
-    newDate = dateInArray.join("-");
-    return newDate;
+    function sanitizeUserInput() {
+        content.sanitizedTypeOfIncrement = typeOfIncrement.toLowerCase();
+        content.sanitizedReferenceDate = referenceDate;
+        content.sanitizeAddFactor = parseInt(addFactor);
+    }
+
+    function separateDateInVariables() {
+        content.dates = {
+            day: parseInt(referenceDate[8] + referenceDate[9]),
+            month: parseInt(referenceDate[5] + referenceDate[6]),
+            year: parseInt(
+                referenceDate[0] + referenceDate[1] + referenceDate[2] + referenceDate[3]
+            ),
+        };
+    }
+
+    function addTheDate() {
+        switch (content.sanitizedTypeOfIncrement) {
+            case "year":
+                content.dates.year = addYear(content.sanitizeAddFactor, content.dates.year);
+                break;
+            default:
+                throw new Error("Invalid type of increment: " + content.sanitizedTypeOfIncrement);
+        }
+    }
+    content.dateInArray.push(content.dates.year, content.dates.month, content.dates.day);
+    content.newDate = content.dateInArray.join("-");
+    return content.newDate;
 }
 
-console.log(dateAdd("year", -2000, "2022-02-27"));
+console.log(dateAdd("year", 13, "2022-02-27"));
 
 // date format = yyyy-mm-dd
 
